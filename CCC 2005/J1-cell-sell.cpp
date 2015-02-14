@@ -19,6 +19,7 @@ int main(){
 
 	printf("Plan A costs %.2f\n", 1.0 * a / 100);
 	printf("Plan B costs %.2f\n", 1.0 * b / 100);
+	
 	if(a == b)
 		printf("Plan A and B are the same price.\n");
 	else
