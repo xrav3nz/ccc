@@ -1,3 +1,8 @@
+// CCC 2008 S4
+
+// I simply tried all the possible combination (with the help of std::next_permutation)
+// and get the answer that is greatest among all but also less than or equal to 24
+
 #include <cstdio>
 #include <vector>
 #include <algorithm>
@@ -9,14 +14,14 @@ int answer, n;
 vector<int> cards(4);
 string ops = "+-*/";
 
-void readData(){
+void ReadData(){
 	for(int i = 0; i < 4; ++i){
 		scanf("%d", &cards[i]);
 	}
 	return ;
 }
 
-int evaluate(int a, int b, char op){
+int Evaluate(int a, int b, char op){
 	if(op == '+')
 		return a + b;
 	else if(op == '-')
@@ -26,7 +31,7 @@ int evaluate(int a, int b, char op){
 	return a / b;
 }
 
-void solve(vector<int> input){
+void Solve(vector<int> input){
 	int size = input.size();
 	if(size == 1){
 		if(input[0] <= 24 && input[0] > answer)
@@ -57,10 +62,10 @@ int main(int argc, char const *argv[])
 	scanf("%d", &n);
 
 	while(n--){
-		readData();
+		ReadData();
 		answer = 0;
 		sort(cards.begin(), cards.end());
-		solve(cards);
+		Solve(cards);
 		printf("%d\n", answer);
 	}
 

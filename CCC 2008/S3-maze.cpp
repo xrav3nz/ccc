@@ -1,3 +1,18 @@
+// CCC 2008 S3 - Maze
+
+// an exercise of breadth first search
+
+// from the starting point, we send a man down to every path possible,
+// mark the visited paths to prevent sending more than one man down the path.
+
+// the first man who reaches the end point is our winner!
+// the number of steps he took from the starting point 
+// to the end point is our answer
+
+// if no one ever gets to the end point, and all the possible paths
+// have been visited, then there is no way to get from the starting
+// point to the end point
+
 #include <cstdio>
 #include <queue>
 #include <cstring>
@@ -6,10 +21,11 @@
 
 using std::queue;
 
-struct Location
-{
-	int r, c, count;
-}start, add;
+struct Location {	
+
+	int r, c,
+		count; // number of steps from the start point
+} start, add;
 
 int t, row, col,
 	moves[4][2] = {
@@ -23,13 +39,13 @@ char maze[MAXRC + 2][MAXRC + 2];
 bool visited[MAXRC + 2][MAXRC + 2];
 queue<Location> paths;
 
-void clear( std::queue<Location> &q )
+void Clear( std::queue<Location> &q )
 {
    std::queue<Location> empty;
    std::swap( q, empty );
 }
 
-void readData(){
+void ReadMaze(){
 
 	scanf("%d %d", &row, &col);
 
@@ -40,7 +56,7 @@ void readData(){
 	return ;
 }
 
-bool isLegal(const Location &a){
+bool IsLegal(const Location &a){
 	if(a.r >= 0 && a.c >= 0 && a.r < row && a.c < col && maze[a.r][a.c] != '*' && !visited[a.r][a.c]){
 		visited[a.r][a.c] = true;
 		return true;
@@ -48,10 +64,10 @@ bool isLegal(const Location &a){
 	return false;
 }
 
-void solve(){
+void Solve(){
 
 	memset(visited, false, sizeof(visited));
-	clear(paths);
+	Clear(paths);
 
 	start.r = 0;
 	start.c = 0;
@@ -62,24 +78,28 @@ void solve(){
 	while(!paths.empty()){
 		start = paths.front();
 		paths.pop();
-		if(start.r == row - 1 && start.c == col - 1){
+
+		// the first one that reaches the end-point is the winner!
+		if (start.r == row - 1 && start.c == col - 1) {
 			printf("%d\n", start.count);
 			return ;
 		}
-		if(maze[start.r][start.c] == '+' || maze[start.r][start.c] == '-')
-			for(int k = 0; k < 2; ++k){
+
+		if (maze[start.r][start.c] == '+' || maze[start.r][start.c] == '-')
+			for (int k = 0; k < 2; ++k) {
 				add.r = start.r + moves[k][0];
 				add.c = start.c + moves[k][1];
 				add.count = start.count + 1;
-				if(isLegal(add))
+				if(IsLegal(add))
 					paths.push(add);
 			}
-		if(maze[start.r][start.c] == '+' || maze[start.r][start.c] == '|')
-			for(int k = 2; k < 4; ++k){
+
+		if (maze[start.r][start.c] == '+' || maze[start.r][start.c] == '|')
+			for (int k = 2; k < 4; ++k) {
 				add.r = start.r + moves[k][0];
 				add.c = start.c + moves[k][1];
 				add.count = start.count + 1;
-				if(isLegal(add))
+				if(IsLegal(add))
 					paths.push(add);
 			}
 	}
@@ -97,9 +117,9 @@ int main(int argc, char const *argv[])
 	scanf("%d", &t);
 
 	while(t--){
-		readData();
+		ReadMaze();
 
-		solve();
+		Solve();
 	}
 
 	return 0;
