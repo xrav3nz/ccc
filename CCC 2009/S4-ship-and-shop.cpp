@@ -1,3 +1,12 @@
+// CCC 2009 S4 - Ship and Shop
+
+// Dijsktra's shortest path algorithm.
+
+// I created an arbitrary node "source", that is connected to all the stores available,
+// with the cost of the pencil being sold there
+
+// So the answer is simply the shortest distance from "source" to the destination city
+
 #include <cstdio>
 #include <iostream>
 #include <climits>
@@ -57,6 +66,7 @@ int main(int argc, char const *argv[])
 
 	for(int i = 0; i < kStores; ++i){
 		cin >> a >> c;
+		// connect all the stores to the arbitrary "source" node
 		routes[0][a] = routes[a][0] = c;
 	}
 
